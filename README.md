@@ -16,7 +16,7 @@ The website layout is implemented using CSS Flexbox and CSS Grid. Flexbox is use
 
 The design follows a responsive approach using relative units, media queries, and flexible containers to ensure compatibility across different screen sizes including desktops, tablets, and mobile devices.
 
-Semantic HTML5 elements such as <header> , <section> , <article> , and <footer> are used to improve code structure, accessibility and maintainability.
+Semantic HTML5 elements are used to improve code structure, accessibility and maintainability.
 
 Known Limitations
 
