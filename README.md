@@ -1,134 +1,173 @@
-# Interactive Multi-Page Portfolio — React
+Interactive Multi-Page Portfolio Website
 
-A React conversion of the Personal Portfolio Website for **CS1303 Full Stack Development — Assignment 2**.
+A responsive personal portfolio website built using React.js and Vite. The static portfolio from Assignment 1 was converted into a reusable React application using components, props, state management, side effects, and client-side routing.
 
-## Features
+Features
+Reusable React components
+Dark/Light theme toggle
+Theme preference persisted using localStorage
+Controlled contact form with validation
+Reusable ProjectCard component
+Project data stored separately in src/data/projects.js
+At least three projects rendered using .map()
+Independent "View Details" state for each project
+Client-side routing using React Router
+Dynamic project detail pages
+404 Not Found page
+Responsive design for mobile, tablet, and desktop
+Technologies Used
+React.js
+Vite
+JavaScript
+HTML5
+CSS3
+React Router DOM
+Project Structure
+FSD-portfolio/
+├── src/
+│   ├── components/
+│   │   ├── Navbar.jsx
+│   │   ├── Footer.jsx
+│   │   ├── Layout.jsx
+│   │   ├── ProjectCard.jsx
+│   │   ├── ContactForm.jsx
+│   │   └── ...
+│   │
+│   ├── pages/
+│   │   ├── Home.jsx
+│   │   ├── About.jsx
+│   │   ├── Projects.jsx
+│   │   ├── ProjectDetail.jsx
+│   │   ├── Contact.jsx
+│   │   └── NotFound.jsx
+│   │
+│   ├── data/
+│   │   └── projects.js
+│   │
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── styles.css
+│
+├── index.html
+├── package.json
+├── vite.config.js
+└── README.md
+Setup and Run
 
-- React functional components and Hooks only.
-- Reusable `Navbar`, `Footer`, `ProjectCard`, `ContactForm`, `ProfileCard`, `AboutContent`, and `SectionHeading`.
-- Project data is stored in `src/data/projects.js`.
-- At least three projects are rendered with `.map()`.
-- `ProjectCard` receives title, description, tech stack, image, link, and id through props.
-- Two-level prop drilling example: `Home -> AboutContent ->` data-driven content.
-- Theme state is lifted to `App` and passed to `Layout -> Navbar`.
-- Contact form uses controlled inputs, validation state, and a disabled submit button until valid.
-- Each `ProjectCard` has independent `useState` for View Details.
-- Home loading sequence uses `useEffect([])` and a cleaned-up `setTimeout`.
-- Theme preference is read initially and persisted with `useEffect` when it changes.
-- Client-side routing with `react-router-dom`.
-- Dynamic `/projects/:projectId` route uses `useParams`.
-- Catch-all 404 page.
-- Responsive CSS for tablet (768px) and mobile (480px).
-- Semantic HTML and basic accessible form attributes.
+Clone the repository:
 
-## Setup
+git clone https://github.com/Amritasrikantam123/FSD-portfolio.git
+cd FSD-portfolio
 
-Requires Node.js and npm.
+Install dependencies:
 
-```bash
 npm install
+
+Start the development server:
+
 npm run dev
-```
 
-Open the local Vite URL shown in the terminal.
+Create a production build:
 
-## Production build
-
-```bash
 npm run build
-```
+Component Architecture
 
-The project should build with:
+The application is divided into reusable functional components.
 
-```text
-dist/
-```
+Navbar – Provides navigation links and the theme toggle.
+Footer – Shared footer displayed across pages.
+Layout – Provides the common Navbar and Footer structure.
+ProjectCard – Generic reusable component that receives project information through props.
+ContactForm – Controlled contact form with validation.
+Pages – Individual components representing different application routes.
 
-No `node_modules` directory is included in the submitted source package.
+Project information is stored in:
 
-## Component tree
+src/data/projects.js
 
-```text
-App
-└── Layout
-    ├── Navbar
-    ├── Routes
-    │   ├── Home
-    │   │   ├── ProfileCard
-    │   │   └── AboutContent
-    │   ├── About
-    │   ├── Projects
-    │   │   └── ProjectCard
-    │   │       └── ProjectPreview
-    │   ├── ProjectDetail
-    │   ├── Contact
-    │   │   └── ContactForm
-    │   └── NotFound
-    └── Footer
-```
+The Projects page maps over the project array and passes each project's data to ProjectCard through props.
 
-### Prop/state decisions
+Props and Prop Drilling
 
-- `theme` is owned by `App` because it must affect the shared navigation/layout and persist across route changes.
-- `Navbar` receives `theme` and `onToggleTheme` as props.
-- `ProjectCard` receives all project-specific content as props, so it contains no hardcoded project data.
-- `ProjectCard` owns its `showDetails` state, which proves that each card instance has independent state.
-- `ContactForm` owns form values, validation errors, and submission feedback because those states belong only to the form.
-- `Home` owns its temporary loading state because loading is only relevant to the Home page.
-- `Home -> AboutContent` demonstrates data being passed from a page component to a child component; `AboutContent` further renders individual data fields, providing the requested multi-level component-data flow.
+ProjectCard receives its project information entirely through props, including:
 
-## useEffect hooks
+Title
+Description
+Technology stack
+Image
+Project link
 
-### 1. Home loading effect
+No project content is hardcoded inside ProjectCard.
 
-`Home.jsx` uses:
+The application also demonstrates multi-level prop passing, where data received by a parent component is passed through a child component to a nested component.
 
-```js
-useEffect(() => {
-  const timer = setTimeout(() => setLoading(false), 1000);
-  return () => clearTimeout(timer);
-}, []);
-```
+State Management
 
-It simulates a short initial loading sequence. The cleanup prevents the timer from updating an unmounted component.
+The application uses useState for multiple independent pieces of state.
 
-### 2. Theme persistence effect
+Theme State
 
-`App.jsx` reads the saved theme during initial state creation and uses:
+The dark/light theme state is lifted to the top-level App component so that it can be shared across the application.
 
-```js
-useEffect(() => {
-  document.documentElement.setAttribute("data-theme", theme);
-  localStorage.setItem("portfolio-theme", theme);
-}, [theme]);
-```
+Contact Form State
 
-This updates the document theme and persists the user's preference whenever the theme changes.
+The contact form is controlled using state for:
 
-## Routes
+Name
+Email
+Message
+Validation errors
 
-- `/Home`
-- `/about`
-- `/projects`
-- `/projects/:projectId`
-- `/contact`
-- `*` — 404 Not Found
+The submit button remains disabled until the required fields are correctly filled.
 
-`/` redirects logically to the Home component as an additional convenience route.
+Project Card State
 
-## Screen recording checklist
+Each ProjectCard maintains its own "View Details" state. Opening the details of one project does not affect other project cards.
 
-For the required 1–2 minute demonstration:
+useEffect Hooks
+Home Page Loading
 
-1. Start on Home and show the loading sequence.
-2. Toggle light/dark mode.
-3. Navigate through About, Projects, and Contact without a full page reload.
-4. On Projects, expand View Details on one card and show that another card remains closed.
-5. Open a dynamic project route such as `/projects/aarohi`.
-6. On Contact, show that empty/invalid fields disable the Send Message button.
-7. Fill valid details and show the validation success message.
-8. Optionally enter an invalid URL to demonstrate the 404 page.
+A useEffect with an empty dependency array runs when the Home component mounts.
 
-## Notes
+A short setTimeout simulates a loading sequence before the Home page content is displayed.
 
-The project currently uses placeholder project preview images from `placehold.co` so it can run without additional binary assets. They can be replaced with local files under `src/assets` later.
+The timer includes cleanup when the component unmounts to prevent unnecessary execution.
+
+Theme Persistence
+
+A useEffect runs whenever the theme changes and stores the selected theme in localStorage.
+
+The saved theme preference is read during the initial application load so that the selected theme remains after refreshing the page.
+
+Routing
+
+Client-side routing is implemented using react-router-dom.
+
+The application includes:
+
+/Home
+/about
+/projects
+/projects/:projectId
+/contact
+*
+
+The /projects/:projectId route is a dynamic route that uses useParams() to identify and display the selected project.
+
+The * route displays a 404 Not Found page with a link back to Home.
+
+Navigation uses Link and NavLink instead of normal <a> tags, preventing full-page reloads.
+
+Responsive Design and Accessibility
+
+The website is responsive across:
+
+Mobile: up to 480px
+Tablet: up to 768px
+Desktop: above 768px
+
+Semantic HTML elements such as <nav>, <main>, <section>, <article>, and <footer> are used throughout the application.
+
+Deployment
+
+The project is deployed using GitHub Pages.
