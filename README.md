@@ -1,28 +1,34 @@
-Interactive Multi-Page Portfolio Website
+# Interactive Multi-Page Portfolio Website
 
-A responsive personal portfolio website built using React.js and Vite. The static portfolio from Assignment 1 was converted into a reusable React application using components, props, state management, side effects, and client-side routing.
+A responsive personal portfolio website built using **React.js and Vite**. The static portfolio from Assignment 1 was converted into a reusable React application using components, props, state management, side effects, and client-side routing.
 
-Features
-Reusable React components
-Dark/Light theme toggle
-Theme preference persisted using localStorage
-Controlled contact form with validation
-Reusable ProjectCard component
-Project data stored separately in src/data/projects.js
-At least three projects rendered using .map()
-Independent "View Details" state for each project
-Client-side routing using React Router
-Dynamic project detail pages
-404 Not Found page
-Responsive design for mobile, tablet, and desktop
-Technologies Used
-React.js
-Vite
-JavaScript
-HTML5
-CSS3
-React Router DOM
-Project Structure
+## Features
+
+- Reusable React components
+- Dark/Light theme toggle
+- Theme preference persisted using `localStorage`
+- Controlled contact form with validation
+- Reusable `ProjectCard` component
+- Project data stored separately in `src/data/projects.js`
+- At least three projects rendered using `.map()`
+- Independent "View Details" state for each project
+- Client-side routing using React Router
+- Dynamic project detail pages
+- 404 Not Found page
+- Responsive design for mobile, tablet, and desktop
+
+## Technologies Used
+
+- React.js
+- Vite
+- JavaScript
+- HTML5
+- CSS3
+- React Router DOM
+
+## Project Structure
+
+```text
 FSD-portfolio/
 ├── src/
 │   ├── components/
@@ -52,122 +58,142 @@ FSD-portfolio/
 ├── package.json
 ├── vite.config.js
 └── README.md
-Setup and Run
+````
+
+## Setup and Run
 
 Clone the repository:
 
+```bash
 git clone https://github.com/Amritasrikantam123/FSD-portfolio.git
 cd FSD-portfolio
+```
 
 Install dependencies:
 
+```bash
 npm install
+```
 
 Start the development server:
 
+```bash
 npm run dev
+```
 
 Create a production build:
 
+```bash
 npm run build
-Component Architecture
+```
+
+## Component Architecture
 
 The application is divided into reusable functional components.
 
-Navbar – Provides navigation links and the theme toggle.
-Footer – Shared footer displayed across pages.
-Layout – Provides the common Navbar and Footer structure.
-ProjectCard – Generic reusable component that receives project information through props.
-ContactForm – Controlled contact form with validation.
-Pages – Individual components representing different application routes.
+* **Navbar** – Provides navigation links and the theme toggle.
+* **Footer** – Shared footer displayed across pages.
+* **Layout** – Provides the common Navbar and Footer structure.
+* **ProjectCard** – Generic reusable component that receives project information through props.
+* **ContactForm** – Controlled contact form with validation.
+* **Pages** – Individual components representing different application routes.
 
 Project information is stored in:
 
+```text
 src/data/projects.js
+```
 
-The Projects page maps over the project array and passes each project's data to ProjectCard through props.
+The Projects page maps over the project array and passes each project's data to `ProjectCard` through props.
 
-Props and Prop Drilling
+## Props and Prop Drilling
 
-ProjectCard receives its project information entirely through props, including:
+`ProjectCard` receives its project information entirely through props, including:
 
-Title
-Description
-Technology stack
-Image
-Project link
+* Title
+* Description
+* Technology stack
+* Image
+* Project link
 
-No project content is hardcoded inside ProjectCard.
+No project content is hardcoded inside `ProjectCard`.
 
 The application also demonstrates multi-level prop passing, where data received by a parent component is passed through a child component to a nested component.
 
-State Management
+## State Management
 
-The application uses useState for multiple independent pieces of state.
+The application uses `useState` for multiple independent pieces of state.
 
-Theme State
+### Theme State
 
-The dark/light theme state is lifted to the top-level App component so that it can be shared across the application.
+The dark/light theme state is lifted to the top-level `App` component so that it can be shared across the application.
 
-Contact Form State
+### Contact Form State
 
 The contact form is controlled using state for:
 
-Name
-Email
-Message
-Validation errors
+* Name
+* Email
+* Message
+* Validation errors
 
 The submit button remains disabled until the required fields are correctly filled.
 
-Project Card State
+### Project Card State
 
-Each ProjectCard maintains its own "View Details" state. Opening the details of one project does not affect other project cards.
+Each `ProjectCard` maintains its own "View Details" state. Opening the details of one project does not affect other project cards.
 
-useEffect Hooks
-Home Page Loading
+## useEffect Hooks
 
-A useEffect with an empty dependency array runs when the Home component mounts.
+### 1. Home Page Loading
 
-A short setTimeout simulates a loading sequence before the Home page content is displayed.
+A `useEffect` with an empty dependency array runs when the Home component mounts.
 
-The timer includes cleanup when the component unmounts to prevent unnecessary execution.
+A short `setTimeout` simulates a loading sequence before the Home page content is displayed.
 
-Theme Persistence
+The timer includes a cleanup function when the component unmounts.
 
-A useEffect runs whenever the theme changes and stores the selected theme in localStorage.
+### 2. Theme Persistence
+
+A `useEffect` runs whenever the theme changes and stores the selected theme in `localStorage`.
 
 The saved theme preference is read during the initial application load so that the selected theme remains after refreshing the page.
 
-Routing
+## Routing
 
-Client-side routing is implemented using react-router-dom.
+Client-side routing is implemented using `react-router-dom`.
 
 The application includes:
 
-/Home
-/about
-/projects
-/projects/:projectId
-/contact
-*
+* `/Home`
+* `/about`
+* `/projects`
+* `/projects/:projectId`
+* `/contact`
+* `*` – 404 Not Found
 
-The /projects/:projectId route is a dynamic route that uses useParams() to identify and display the selected project.
+The `/projects/:projectId` route is a dynamic route that uses `useParams()` to identify and display the selected project.
 
-The * route displays a 404 Not Found page with a link back to Home.
+The `*` route displays a 404 Not Found page with a link back to Home.
 
-Navigation uses Link and NavLink instead of normal <a> tags, preventing full-page reloads.
+Navigation uses `Link` and `NavLink` instead of normal `<a>` tags, preventing full-page reloads.
 
-Responsive Design and Accessibility
+## Responsive Design and Accessibility
 
 The website is responsive across:
 
-Mobile: up to 480px
-Tablet: up to 768px
-Desktop: above 768px
+* **Mobile:** up to 480px
+* **Tablet:** up to 768px
+* **Desktop:** above 768px
 
-Semantic HTML elements such as <nav>, <main>, <section>, <article>, and <footer> are used throughout the application.
+Semantic HTML elements such as `<nav>`, `<main>`, `<section>`, `<article>`, and `<footer>` are used throughout the application.
 
-Deployment
+## Deployment
 
 The project is deployed using GitHub Pages.
+
+**Live Website:**
+[https://amritasrikantam123.github.io/FSD-portfolio/](https://amritasrikantam123.github.io/FSD-portfolio/)
+
+**GitHub Repository:**
+[https://github.com/Amritasrikantam123/FSD-portfolio](https://github.com/Amritasrikantam123/FSD-portfolio)
